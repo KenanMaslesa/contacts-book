@@ -1,18 +1,43 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import * as ContactActions from '../../state/contact.actions';
 import { Store } from '@ngrx/store';
-import { Contact } from '../../models';
 import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Contact } from '../../models';
+
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTabsModule,
+    MatSelectModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule,
+    MatDialogContent,
+    MatDialogActions,
+  ],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
   private store = inject(Store);
+  public dialogRef = inject(MatDialogRef<ContactFormComponent>);
+
   public firstName: string = '';
   public lastName: string = '';
   public phone: string = '';
@@ -34,5 +59,10 @@ export class ContactFormComponent {
         contact: newContact,
       })
     );
+    this.dialogRef.close();
+  }
+
+  public onCancel(): void {
+    this.dialogRef.close();
   }
 }

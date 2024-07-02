@@ -40,7 +40,7 @@ const _contactReducer = createReducer(
   })),
   on(ContactActions.SelectContact, (state, { contactId }) => ({
     ...state,
-    selectedContactId: contactId,
+    selectedContactId: state.selectedContactId === contactId ? null : contactId,
   })),
 );
 
