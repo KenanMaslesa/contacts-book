@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Contact } from '../models';
+import * as ContactActions from './contact.actions';
 
 export interface ContactState {
   contacts: Contact[];
@@ -30,6 +31,17 @@ export const initialState: ContactState = {
 
 const _contactReducer = createReducer(
   initialState,
+  on(ContactActions.AddContact, (state, { contact }) => ({
+    ...state,
+    contacts: [
+      ...state.contacts,
+      { ...contact, id: state.contacts.length + 1 },
+    ],
+  })),
+  on(ContactActions.SelectContact, (state, { contactId }) => ({
+    ...state,
+    selectedContactId: contactId,
+  })),
 );
 
 export function contactReducer(state: ContactState, action: Action) {

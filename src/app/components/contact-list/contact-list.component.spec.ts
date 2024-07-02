@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { ContactListComponent } from './contact-list.component';
 
@@ -8,7 +9,8 @@ describe('ContactListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactListComponent]
+      imports: [ContactListComponent],
+      providers: [provideMockStore({})],
     })
     .compileComponents();
     
