@@ -1,7 +1,14 @@
-@if(contacts$ | async; as contacts) {
-    <pre>
-        {{contacts | json}}
-    </pre>
-}@else {
+@if(contacts$ | async; as contacts) { 
+    @for(contact of contacts; track contact.id) {
+        <div
+        (click)="selectContact(contact)"
+        [class.selected]="(selectedContact$ | async)?.id === contact.id"
+        >
+        {{ contact.firstName }} {{ contact.lastName }}
+        </div>
+    } 
+} @else {
 <p>No contacts</p>
 }
+
+<app-contact-form></app-contact-form>
