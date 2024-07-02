@@ -6,7 +6,6 @@ import {
   inject,
 } from '@angular/core';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -16,12 +15,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { Contact } from '../../models';
 
-import {
-  selectAllContacts,
-  selectCurrentContact,
-} from '../../state/contact.selectors';
-import * as ContactActions from '../../state/contact.actions';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
+import { ContactFacade } from '../../state/contact.facade';
 
 @Component({
   selector: 'app-contact-list',
@@ -42,19 +37,17 @@ import { ContactFormComponent } from '../contact-form/contact-form.component';
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  private store = inject(Store);
-  public dialog = inject(MatDialog);
+  private contactFacade = inject(ContactFacade);
+  private dialog = inject(MatDialog);
 
   public displayedColumns: string[] = ['firstName', 'lastName'];
   public contacts$!: Observable<Contact[]>;
-  public selectedContact$!: Observable<Contact | undefined>;
   public selectedContact: Contact | undefined;
 
   public ngOnInit(): void {
-    this.contacts$ = this.store.select(selectAllContacts);
-    this.selectedContact$ = this.store.select(selectCurrentContact);
+    this.contacts$ = this.contactFacade.contacts$;
 
-    this.selectedContact$
+    this.contactFacade.selectedContact$
       .pipe(
         map((data) => {
           this.selectedContact = data;
@@ -65,9 +58,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   public toggleSelectedContact(contact: Contact): void {
-    this.store.dispatch(
-      ContactActions.SelectContact({ contactId: contact.id })
-    );
+    this.contactFacade.dispatchSelectContact(contact.id);
   }
 
   public openAddContactModal(): void {

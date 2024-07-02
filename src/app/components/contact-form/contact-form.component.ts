@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import * as ContactActions from '../../state/contact.actions';
-import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,12 +11,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogContent, MatDialogActions } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Contact } from '../../models';
-
+import { ContactFacade } from '../../state/contact.facade';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [FormsModule,
+  imports: [
+    FormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -32,11 +31,11 @@ import { Contact } from '../../models';
   ],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactFormComponent {
-  private store = inject(Store);
-  public dialogRef = inject(MatDialogRef<ContactFormComponent>);
+  private contactFacade = inject(ContactFacade);
+  private dialogRef = inject(MatDialogRef<ContactFormComponent>);
 
   public firstName: string = '';
   public lastName: string = '';
@@ -54,11 +53,7 @@ export class ContactFormComponent {
       address: this.address,
     };
 
-    this.store.dispatch(
-      ContactActions.AddContact({
-        contact: newContact,
-      })
-    );
+    this.contactFacade.dispatchAddContact(newContact);
     this.dialogRef.close();
   }
 
