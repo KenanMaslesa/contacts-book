@@ -1,0 +1,7 @@
+@if(contacts$ | async; as contacts) {
+    <pre>
+        {{contacts | json}}
+    </pre>
+}@else {
+<p>No contacts</p>
+}
