@@ -14,7 +14,10 @@ $my-theme: mat.define-light-theme((color: (primary: $my-primary,
 
 @include mat.all-component-themes($my-theme);
 
-html, body { height: 100%; }
+html,
+body {
+    height: 100%;
+}
 
 body {
     margin: 0;
@@ -23,7 +26,6 @@ body {
     justify-content: center;
     min-height: 100vh;
     box-sizing: border-box;
-    // background: linear-gradient(170deg, oklch(61.42% 0.238 15.34), #F0060B);
     background: linear-gradient(170deg, deepskyblue, navy);
     padding: 50px;
 }

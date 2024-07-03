@@ -14,7 +14,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { Contact } from '../../models';
-
 import { ContactFormComponent } from '../contact-form/contact-form.component';
 import { ContactFacade } from '../../state/contact.facade';
 
@@ -49,8 +48,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
     this.contactFacade.selectedContact$
       .pipe(
-        map((data) => {
-          this.selectedContact = data;
+        map((selectedContact) => {
+          this.selectedContact = selectedContact;
         }),
         takeUntil(this.destroy$)
       )

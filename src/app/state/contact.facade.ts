@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Injectable, inject } from '@angular/core';
-
 import { Observable } from 'rxjs';
+
 import * as ContactSelectors from './contact.selectors';
 import { Contact } from '../models';
 import * as ContactActions from './contact.actions';
