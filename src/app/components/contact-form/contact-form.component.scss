@@ -1,3 +1,12 @@
+h2 {
+    margin-top: 20px;
+}
+
 mat-dialog-actions {
     justify-content: end;
+    padding: 0px 15px 15px 0px;
+}
+
+mat-dialog-content {
+    padding-bottom: 0px !important;
 }
