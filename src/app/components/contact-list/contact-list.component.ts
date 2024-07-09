@@ -5,7 +5,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -48,7 +48,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
     this.contactFacade.selectedContact$
       .pipe(
-        map((selectedContact) => {
+        tap((selectedContact) => {
           this.selectedContact = selectedContact;
         }),
         takeUntil(this.destroy$)

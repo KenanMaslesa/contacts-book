@@ -6,3 +6,8 @@ export interface Contact {
   email: string;
   address: string;
 }
+
+export interface ContactState {
+  contacts: Contact[];
+  selectedContactId: number | null;
+}
